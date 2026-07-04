@@ -5,6 +5,10 @@ Deliverable #2 (15%). A **concept simulation** in [Wokwi](https://wokwi.com) or
 representative room** (2 fans + 3 lights), not all 15 devices; the design just
 has to make physical sense.
 
+**▶ Live Wokwi simulation:** <https://wokwi.com/projects/468643690609206273>
+Open it in a browser — no setup needed. Toggle the switches to flip each
+fan/light and turn the potentiometer to change the simulated current reading.
+
 ## What's in this folder
 
 - `diagram.json` — the Wokwi circuit (ESP32 + LEDs + switches + potentiometer),
