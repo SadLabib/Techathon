@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: #020617; /* slate-950 */
+  color: #f1f5f9; /* slate-100 */
+}
+
+/* Fan blades spinning when a fan is ON */
+@keyframes spin-fan {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.fan-spin {
+  animation: spin-fan 0.8s linear infinite;
+}
