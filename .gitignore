@@ -10,6 +10,10 @@ dist/
 .env
 .env.local
 
+# PlatformIO / Wokwi
+.pio/
+.pioenvs/
+
 # Editor / OS
 .DS_Store
 .vscode/
