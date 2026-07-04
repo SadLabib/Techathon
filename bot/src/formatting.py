@@ -47,24 +47,37 @@ def plain_usage(totals: dict) -> str:
     )
 
 
+_SYSTEM_PROMPT = (
+    "You are a friendly office assistant bot for the boss. Rephrase the given "
+    "facts in one or two warm, natural sentences. Do NOT change, add, or invent "
+    "any numbers or device states — only improve the wording. No robotic data "
+    "dumps. Keep it short."
+)
+
+
 async def humanize(facts: str) -> str:
-    """Rewrite `facts` in a warm, concise voice. Falls back to `facts` on error."""
-    if not config.ANTHROPIC_API_KEY:
+    """Rewrite `facts` in a warm, concise voice using Gemini.
+
+    Falls back to the plain `facts` string if no key is set or the call fails,
+    so the bot always answers with correct data even without an LLM.
+    """
+    if not config.GEMINI_API_KEY:
         return facts
     try:
-        from anthropic import AsyncAnthropic
+        from google import genai
+        from google.genai import types
 
-        client = AsyncAnthropic(api_key=config.ANTHROPIC_API_KEY)
-        msg = await client.messages.create(
-            model=config.LLM_MODEL,
-            max_tokens=200,
-            system=(
-                "You are a friendly office assistant bot. Rephrase the given "
-                "facts in one or two warm, natural sentences. Do NOT change, add, "
-                "or invent any numbers — only the wording. No robotic data dumps."
+        client = genai.Client(api_key=config.GEMINI_API_KEY)
+        response = await client.aio.models.generate_content(
+            model=config.GEMINI_MODEL,
+            contents=facts,
+            config=types.GenerateContentConfig(
+                system_instruction=_SYSTEM_PROMPT,
+                max_output_tokens=200,
+                temperature=0.7,
             ),
-            messages=[{"role": "user", "content": facts}],
         )
-        return msg.content[0].text.strip()
+        text = (response.text or "").strip()
+        return text or facts
     except Exception:
         return facts  # graceful fallback keeps the bot working offline
