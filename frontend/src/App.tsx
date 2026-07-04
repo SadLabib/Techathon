@@ -1,13 +1,18 @@
+import { useState } from "react";
 import { useLiveState } from "./useLiveState";
 import { RoomPanel } from "./components/RoomPanel";
 import { PowerMeter } from "./components/PowerMeter";
 import { AlertsPanel } from "./components/AlertsPanel";
+import { OfficeFloorPlan } from "./components/OfficeFloorPlan";
 import type { RoomId } from "./types";
 
 const ROOMS: RoomId[] = ["drawing", "work1", "work2"];
 
+type View = "floor" | "panels";
+
 export default function App() {
   const { snapshot, connected } = useLiveState();
+  const [view, setView] = useState<View>("floor");
 
   return (
     <div className="min-h-screen p-4 sm:p-6 max-w-6xl mx-auto">
@@ -42,14 +47,40 @@ export default function App() {
       ) : (
         <div className="grid lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 space-y-4">
-            {ROOMS.map((room) => (
-              <RoomPanel
-                key={room}
-                room={room}
-                devices={snapshot.devices.filter((d) => d.room === room)}
-                power={snapshot.totals.perRoomW[room]}
+            <div className="inline-flex rounded-lg border border-slate-700 bg-slate-900 p-1 text-sm">
+              <button
+                onClick={() => setView("floor")}
+                className={`px-3 py-1 rounded-md transition-colors ${
+                  view === "floor" ? "bg-slate-700 text-white" : "text-slate-400"
+                }`}
+              >
+                Floor Plan
+              </button>
+              <button
+                onClick={() => setView("panels")}
+                className={`px-3 py-1 rounded-md transition-colors ${
+                  view === "panels" ? "bg-slate-700 text-white" : "text-slate-400"
+                }`}
+              >
+                Panels
+              </button>
+            </div>
+
+            {view === "floor" ? (
+              <OfficeFloorPlan
+                devices={snapshot.devices}
+                perRoomW={snapshot.totals.perRoomW}
               />
-            ))}
+            ) : (
+              ROOMS.map((room) => (
+                <RoomPanel
+                  key={room}
+                  room={room}
+                  devices={snapshot.devices.filter((d) => d.room === room)}
+                  power={snapshot.totals.perRoomW[room]}
+                />
+              ))
+            )}
           </div>
           <div className="space-y-4">
             <PowerMeter totals={snapshot.totals} />

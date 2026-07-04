@@ -21,4 +21,6 @@ body {
 }
 .fan-spin {
   animation: spin-fan 0.8s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }

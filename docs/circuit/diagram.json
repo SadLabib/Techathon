@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "author": "Techathon",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp32", "top": 100, "left": 0, "attrs": {} },
+
+    { "type": "wokwi-led", "id": "ledF1", "top": -100, "left": 180, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "ledF2", "top": -100, "left": 240, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led1",  "top": -100, "left": 300, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led2",  "top": -100, "left": 360, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led3",  "top": -100, "left": 420, "attrs": { "color": "green" } },
+
+    { "type": "wokwi-resistor", "id": "rF1", "top": -20, "left": 180, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "rF2", "top": -20, "left": 240, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r1",  "top": -20, "left": 300, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2",  "top": -20, "left": 360, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r3",  "top": -20, "left": 420, "attrs": { "value": "220" } },
+
+    { "type": "wokwi-slide-switch", "id": "sw1", "top": 300, "left": 300, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "sw2", "top": 300, "left": 380, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "sw3", "top": 300, "left": 460, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "sw4", "top": 300, "left": 540, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "sw5", "top": 300, "left": 620, "attrs": {} },
+
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": 420, "left": 300, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp32:D32", "rF1:1", "green", [] ],
+    [ "esp32:D33", "rF2:1", "green", [] ],
+    [ "esp32:D25", "r1:1",  "green", [] ],
+    [ "esp32:D26", "r2:1",  "green", [] ],
+    [ "esp32:D27", "r3:1",  "green", [] ],
+    [ "rF1:2", "ledF1:A", "green", [] ],
+    [ "rF2:2", "ledF2:A", "green", [] ],
+    [ "r1:2",  "led1:A",  "green", [] ],
+    [ "r2:2",  "led2:A",  "green", [] ],
+    [ "r3:2",  "led3:A",  "green", [] ],
+    [ "ledF1:K", "esp32:GND.1", "black", [] ],
+    [ "ledF2:K", "esp32:GND.1", "black", [] ],
+    [ "led1:K",  "esp32:GND.1", "black", [] ],
+    [ "led2:K",  "esp32:GND.1", "black", [] ],
+    [ "led3:K",  "esp32:GND.1", "black", [] ],
+
+    [ "sw1:2", "esp32:D32", "blue", [] ],
+    [ "sw2:2", "esp32:D33", "blue", [] ],
+    [ "sw3:2", "esp32:D25", "blue", [] ],
+    [ "sw4:2", "esp32:D26", "blue", [] ],
+    [ "sw5:2", "esp32:D27", "blue", [] ],
+
+    [ "sw1:1", "esp32:3V3", "red", [] ],
+    [ "sw2:1", "esp32:3V3", "red", [] ],
+    [ "sw3:1", "esp32:3V3", "red", [] ],
+    [ "sw4:1", "esp32:3V3", "red", [] ],
+    [ "sw5:1", "esp32:3V3", "red", [] ],
+
+    [ "sw1:3", "esp32:GND.2", "black", [] ],
+    [ "sw2:3", "esp32:GND.2", "black", [] ],
+    [ "sw3:3", "esp32:GND.2", "black", [] ],
+    [ "sw4:3", "esp32:GND.2", "black", [] ],
+    [ "sw5:3", "esp32:GND.2", "black", [] ],
+
+    [ "esp32:D34", "pot1:SIG", "orange", [] ],
+    [ "pot1:VCC",  "esp32:3V3",   "red",   [] ],
+    [ "pot1:GND",  "esp32:GND.1", "black", [] ]
+  ]
+}
